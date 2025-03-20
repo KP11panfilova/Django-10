@@ -47,23 +47,15 @@ class Tag(models.Model):
         return self.slug
 
 class Post(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=200)
+    content = models.TextField()
     text = models.TextField(blank=True, null=True)
     image = models.URLField()
     is_published = models.BooleanField(default=False)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    image = models.ImageField(upload_to='posts/')
     createdAt = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, related_name="posts")
-
-    def __str__(self):
-        return self.title
-
-class Post(models.Model):
-    title = models.CharField(max_length=200)
-    content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='posts/')
-    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
